@@ -14,21 +14,21 @@ export default function Home() {
       <div className="flex justify-center items-center h-[150px]">
         <div className="pl-[100px] p-[0px] min-w-fit"><Image className="w-[105px] h-[50px]" src={mainLogo} alt=""/></div>
         <div className="flex flex-row w-full p-24 gap-28 text-[14px]">
-          <div className="flex flex-row items-center">  
+          <div className="flex flex-row items-center gap-5">  
             <div className="w-[12px] h-[85px] rounded-[5px] bg-gradient-to-b from-[#BE2E21] via-[#F2DF3A] to-[#0693E3]"></div>
             <p>
               Адрес:<br></br>
               Карла Маркса 218 БЦ “Найди”, 4 этаж
             </p>
           </div>
-          <div className="flex flex-row items-center">  
+          <div className="flex flex-row items-center gap-5">  
             <div className="w-[12px] h-[85px] rounded-[5px] bg-gradient-to-b from-[#BE2E21] via-[#F2DF3A] to-[#0693E3]"></div>
             <p>
               Телефон:<br></br>
               +7 (3412) 269-220
             </p>
           </div>
-          <div className="flex flex-row items-center">  
+          <div className="flex flex-row items-center gap-5">  
             <div className="content w-[12px] h-[85px] rounded-[5px] bg-gradient-to-b from-[#BE2E21] via-[#F2DF3A] to-[#0693E3]"></div>
             <p>
               E-mail:<br></br>
