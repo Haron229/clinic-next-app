@@ -34,7 +34,7 @@ model User {
 
 model Doctor {
   id         String @id @default(uuid())
-  firstName   String
+  firstName  String
   lastName   String
   patronymic String
 
@@ -54,7 +54,7 @@ model MedicalConclusion {
   eyelids    String
   cornea     String
   frontCam   String
-  hydration  String
+  lacrimal   String
   iris       String
   pupil      String
   lens       String
@@ -75,7 +75,7 @@ model Appointment {
   time       String
   isOccupied Boolean @default(false)
 
-  Doctor   Doctor  @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  Doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
   doctorId String
   User     User   @relation(fields: [userId], references: [id])
   userId   String

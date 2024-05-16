@@ -49,21 +49,9 @@ export type MedicalConclusion = {
 	eyelids: string
 	cornea: string
 	frontCam: string
-	hydration: string
+	lacrimal: string
 	iris: string
 	pupil: string
 	lens: string
 	vitreous: string
-}
-
-export interface UserPostProps {
-	type: "appointments" | "conclusions"
-}
-
-export interface UserPostAppointmentsProps extends UserPostProps {
-	data: Appointment
-}
-
-export interface UserPostConclusionProps extends UserPostProps {
-	data: MedicalConclusion
 }

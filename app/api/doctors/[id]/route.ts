@@ -43,7 +43,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 						eyelids: conclusion.eyelids,
 						cornea: conclusion.cornea,
 						frontCam: conclusion.frontCam,
-						hydration: conclusion.hydration,
+						lacrimal: conclusion.lacrimal,
 						iris: conclusion.iris,
 						pupil: conclusion.pupil,
 						lens: conclusion.lens,

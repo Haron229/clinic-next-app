@@ -54,7 +54,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 						eyelids: conclusion.eyelids,
 						cornea: conclusion.cornea,
 						frontCam: conclusion.frontCam,
-						hydration: conclusion.hydration,
+						lacrimal: conclusion.lacrimal,
 						iris: conclusion.iris,
 						pupil: conclusion.pupil,
 						lens: conclusion.lens,
@@ -101,35 +101,3 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
 		return new NextResponse("Не удалось обновить данные пользователя. Ошибка: " + error, { status: 500 });
 	}
 }
-
-// export const POST = async (req: NextRequest, { params }: { params: { id: string } }) => {
-// 	try {
-// 		const props: UserPostAppointmentsProps | UserPostConclusionProps = await req.json();
-
-// 		if (props.type === "appointments") {
-// 			let data: Appointment = props.data as Appointment;
-// 			const res = await prisma.user.update({
-// 				where: {
-// 					id: params.id,
-// 				},
-// 				data: {
-// 					appointments: {
-// 						createMany: {
-// 							data: {
-// 								date: data.date,
-// 								time: data.time,
-// 								doctorId: data.doctorId,
-// 								isOccupied: true
-// 							}
-// 						}
-// 					}
-// 				}
-// 			});
-// 		}
-// 		else if (props.type === "conclusions") {
-
-// 		}
-// 	} catch (error) {
-
-// 	}
-// }
