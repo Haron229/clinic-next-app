@@ -171,8 +171,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col bg-darkGrey pl-40 pt-16">
-        <div className="flex flex-row gap-40 pb-12">
+      <div className="flex flex-col bg-darkGrey pt-16">
+        <div className="flex flex-row gap-40 pl-52 pb-12">
           <div className="p-[0px] min-w-fit"><Image className="w-[105px] h-[50px]" src={mainLogo} alt=""/></div>
           <div className="flex flex-col space-y-4">
             <Link href={"#"}>О клинике</Link>
@@ -187,7 +187,7 @@ export default function Home() {
             <Link href={"#"}>Специалисты</Link>
           </div>
         </div>
-        <div className="flex flex-row items-center gap-48 pb-8 text-[14px]">
+        <div className="flex flex-row items-center justify-center gap-48 pb-8 text-[14px]">
           <span>Кругозор Ижевск © 2023.</span>
           <span>Адрес: Карла Маркса 218 БЦ “Найди”, 4 этаж</span>
           <span>Телефон: +7(3412) 933-444<br></br>
