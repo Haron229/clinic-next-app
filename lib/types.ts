@@ -47,6 +47,7 @@ export type MedicalConclusion = {
 	od: number
 	os: number
 	eyelids: string
+	conjunctiva: string
 	cornea: string
 	frontCam: string
 	lacrimal: string

@@ -52,6 +52,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 						od: conclusion.od,
 						os: conclusion.os,
 						eyelids: conclusion.eyelids,
+						conjunctiva: conclusion.conjunctiva,
 						cornea: conclusion.cornea,
 						frontCam: conclusion.frontCam,
 						lacrimal: conclusion.lacrimal,
