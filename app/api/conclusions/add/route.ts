@@ -13,6 +13,7 @@ export const POST = async (req: NextRequest) => {
 				od: data.od,
 				os: data.os,
 				eyelids: data.eyelids,
+				conjunctiva: data.conjunctiva,
 				cornea: data.cornea,
 				frontCam: data.frontCam,
 				lacrimal: data.lacrimal,
