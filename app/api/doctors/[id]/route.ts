@@ -21,6 +21,10 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 			firstName: res.firstName,
 			lastName: res.lastName,
 			patronymic: res.patronymic,
+			startTime: res.startTime,
+			endTime: res.endTime,
+			breakTime: res.breakTime,
+			appointmentDuration: res.appointmentDuration,
 			appointments: [
 				...res.appointments.map((appointment: Appointment): Appointment => {
 					return {

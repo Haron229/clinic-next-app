@@ -15,6 +15,10 @@ export const GET = async (req: NextRequest) => {
 					firstName: doc.firstName,
 					lastName: doc.lastName,
 					patronymic: doc.patronymic,
+					startTime: doc.startTime,
+					endTime: doc.endTime,
+					breakTime: doc.breakTime,
+					appointmentDuration: doc.appointmentDuration
 				}
 			})
 		];

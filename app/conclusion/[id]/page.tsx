@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 
 import {
   Form,
@@ -13,18 +12,26 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { User } from "@/lib/types";
 
 const formSchema = z.object({
   complaints: z.string(),
   anamnezis: z.string(),
-  od: z.number(),
-  os: z.number(),
+  od: z.string(),
+  os: z.string(),
   eyelids: z.string(),
   conjunctiva: z.string(),
   cornea: z.string(),
@@ -38,14 +45,24 @@ const formSchema = z.object({
 
 const Conclusion = ({ params }: { params: { id: string } }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [userData, setUserData] = useState<User | null>(null);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      let res = await fetch(`/api/users/${params.id}`);
+      setUserData(await res.json());
+    };
+
+    getUserData();
+  }, [params.id]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       complaints: "",
       anamnezis: "",
-      od: 1.0,
-      os: 1.0,
+      od: "1.0",
+      os: "1.0",
       eyelids: "",
       conjunctiva: "",
       cornea: "",
@@ -58,6 +75,10 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
     },
   });
 
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+  };
+
   return (
     <div className="container py-20">
       <div className="flex flex-col items-end">
@@ -66,10 +87,16 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
             Вернуться к списку приёмов
           </Button>
         </Link>
-        <div className="pt-20 text-[24px]">Пациент: </div>
+        <div className="pt-20 text-[24px]">
+          Пациент:
+          {` ${userData?.lastName} ${userData?.firstName} ${userData?.patronymic}`}
+        </div>
       </div>
       <Form {...form}>
-        <form className="flex flex-col gap-5 text-xl">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-5 text-xl"
+        >
           <FormLabel className="text-[32px] pb-[30px]">
             Офтальмологический анамнез
           </FormLabel>
@@ -140,9 +167,25 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                 <FormItem>
                   <div className="flex flex-row items-center gap-[30px]">
                     <FormLabel>Веки:</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Спокойны">Спокойны</SelectItem>
+                        <SelectItem value="Гиперемированы">
+                          Гиперемированы
+                        </SelectItem>
+                        <SelectItem value="Отделяемое из мейбомиевых желез">
+                          Отделяемое из мейбомиевых желез
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}
@@ -154,9 +197,39 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                 <FormItem>
                   <div className="flex flex-row items-center gap-[30px]">
                     <FormLabel>Конъюнктива:</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Бледно-розовая">
+                          Бледно-розовая
+                        </SelectItem>
+                        <SelectItem value="Чистая">Чистая</SelectItem>
+                        <SelectItem value="Гиперемирована">
+                          Гиперемирована
+                        </SelectItem>
+                        <SelectItem value="Рыхлая">Рыхлая</SelectItem>
+                        <SelectItem value="Фолликулы">Фолликулы</SelectItem>
+                        <SelectItem value="Отделяемое слизистое">
+                          Отделяемое слизистое
+                        </SelectItem>
+                        <SelectItem value="Отделяемое гнойное">
+                          Отделяемое гнойное
+                        </SelectItem>
+                        <SelectItem value="Отделяемое обильное">
+                          Отделяемое обильное
+                        </SelectItem>
+                        <SelectItem value="Отделяемое скудное">
+                          Отделяемое скудное
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}
@@ -168,9 +241,21 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                 <FormItem>
                   <div className="flex flex-row items-center gap-[30px]">
                     <FormLabel>Роговица:</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Прозрачная">Прозрачная</SelectItem>
+                        <SelectItem value="Гладкая">Гладкая</SelectItem>
+                        <SelectItem value="Сферичная">Сферичная</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}
@@ -184,9 +269,28 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                     <FormLabel className="text-nowrap">
                       Передняя камера:
                     </FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Средней глубины">
+                          Средней глубины
+                        </SelectItem>
+                        <SelectItem value="Глубокая">Глубокая</SelectItem>
+                        <SelectItem value="Мелкая">Мелкая</SelectItem>
+                        <SelectItem value="Влага прозрачная">
+                          Влага прозрачная
+                        </SelectItem>
+                        <SelectItem value="Гифема">Гифема</SelectItem>
+                        <SelectItem value="Гипопион">Гипопион</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}
@@ -200,9 +304,27 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                     <FormLabel className="text-nowrap">
                       Слёзные органы:
                     </FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="1">1</SelectItem>
+                        <SelectItem value="2">2</SelectItem>
+                        <SelectItem value="3">3</SelectItem>
+                        <SelectItem value="4">4</SelectItem>
+                        <SelectItem value="5">5</SelectItem>
+                        <SelectItem value="6">6</SelectItem>
+                        <SelectItem value="7">7</SelectItem>
+                        <SelectItem value="8">8</SelectItem>
+                        <SelectItem value="9">9</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}
@@ -216,9 +338,26 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                     <FormLabel className="text-nowrap">
                       Радужная оболочка:
                     </FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Сохранена">Сохранена</SelectItem>
+                        <SelectItem value="Субатрофия">Субатрофия</SelectItem>
+                        <SelectItem value="Атрофия зрачковой каймы">
+                          Атрофия зрачковой каймы
+                        </SelectItem>
+                        <SelectItem value="Псевдоэксфолиации">
+                          Псевдоэксфолиации
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}
@@ -230,9 +369,31 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                 <FormItem>
                   <div className="flex flex-row items-center gap-[30px]">
                     <FormLabel>Зрачок:</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Круглый">Круглый</SelectItem>
+                        <SelectItem value="Деформирован">
+                          Деформирован
+                        </SelectItem>
+                        <SelectItem value="Реакция на свет живая">
+                          Реакция на свет живая
+                        </SelectItem>
+                        <SelectItem value="Реакция на свет ослаблена">
+                          Реакция на свет ослаблена
+                        </SelectItem>
+                        <SelectItem value="Реакция на свет отсутствует">
+                          Реакция на свет отсутствует
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}
@@ -244,9 +405,31 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                 <FormItem>
                   <div className="flex flex-row items-center gap-[30px]">
                     <FormLabel>Хрусталик:</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Прозрачный">Прозрачный</SelectItem>
+                        <SelectItem value="Помутнения субкапсулярные">
+                          Помутнения субкапсулярные
+                        </SelectItem>
+                        <SelectItem value="Помутнения ядерные">
+                          Помутнения ядерные
+                        </SelectItem>
+                        <SelectItem value="Помутнения заднекапсулярные">
+                          Помутнения заднекапсулярные
+                        </SelectItem>
+                        <SelectItem value="Помутнения кортикальные">
+                          Помутнения кортикальные
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}
@@ -260,9 +443,25 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                     <FormLabel className="text-nowrap">
                       Стекловидное тело:
                     </FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите заключение" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Прозрачное">Прозрачное</SelectItem>
+                        <SelectItem value="Деструкция нитчатая">
+                          Деструкция нитчатая
+                        </SelectItem>
+                        <SelectItem value="Деструкция астероидная">
+                          Деструкция астероидная
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </FormItem>
               )}

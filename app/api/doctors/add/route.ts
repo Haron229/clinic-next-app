@@ -11,6 +11,10 @@ export const POST = async (req: NextRequest) => {
 				firstName: data.firstName,
 				lastName: data.lastName,
 				patronymic: data.patronymic,
+				startTime: data.startTime,
+				endTime: data.endTime,
+				breakTime: data.breakTime,
+				appointmentDuration: data.appointmentDuration,
 				appointments: {
 					create: []
 				},

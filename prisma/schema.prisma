@@ -33,10 +33,14 @@ model User {
 }
 
 model Doctor {
-  id         String @id @default(uuid())
-  firstName  String
-  lastName   String
-  patronymic String
+  id                  String @id @default(uuid())
+  firstName           String
+  lastName            String
+  patronymic          String
+  startTime           String
+  endTime             String
+  breakTime           String
+  appointmentDuration String
 
   appointments Appointment[]
   conclusions  MedicalConclusion[]

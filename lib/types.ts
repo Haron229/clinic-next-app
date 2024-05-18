@@ -25,6 +25,10 @@ export type Doctor = {
 	firstName: string
 	lastName: string
 	patronymic: string
+	startTime: string
+	endTime: string
+	breakTime: string
+	appointmentDuration: string
 
 	appointments?: Appointment[]
 	conclusions?: MedicalConclusion[]
