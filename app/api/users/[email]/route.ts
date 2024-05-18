@@ -2,11 +2,11 @@ import { prisma } from "@/lib/prisma";
 import { Appointment, MedicalConclusion, User } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = async (req: NextRequest, { params }: { params: { email: string } }) => {
 	try {
 		const res = await prisma.user.findFirst({
 			where: {
-				id: params.id
+				email: params.email,
 			},
 			include: {
 				appointments: true,

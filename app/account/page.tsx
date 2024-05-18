@@ -1,34 +1,41 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import mainLogo from "../../public/logo.png";
+import { currentUser } from "@clerk/nextjs/server";
+import { User } from "@/lib/types";
 
-const Account = () => {
-  // const result = await fetch(`/api/user/${}`, {
-  //   method: "GET",
-  // })
-  // const user: User = await result.json();
+const Account = async () => {
+  const [userData, setUserData] = useState<User | null>(null);
+
+  const user = await currentUser();
+  const res = await fetch(`/api/users/${user?.emailAddresses[0].emailAddress}`);
+
+  if (res.ok) setUserData(await res.json());
 
   return (
     <div>
       <div className="flex justify-center items-center h-[150px]">
-        <div className="pl-[100px] p-[0px] min-w-fit"><Image className="w-[105px] h-[50px]" src={mainLogo} alt=""/></div>
+        <div className="pl-[100px] p-[0px] min-w-fit">
+          <Image className="w-[105px] h-[50px]" src={mainLogo} alt="" />
+        </div>
         <div className="flex flex-row w-full p-24 gap-28 text-[14px]">
-          <div className="flex flex-row items-center gap-5">  
+          <div className="flex flex-row items-center gap-5">
             <div className="w-[12px] h-[85px] rounded-[5px] bg-gradient-to-b from-[#BE2E21] via-[#F2DF3A] to-[#0693E3]"></div>
             <p>
               Адрес:<br></br>
               Карла Маркса 218 БЦ “Найди”, 4 этаж
             </p>
           </div>
-          <div className="flex flex-row items-center gap-5">  
+          <div className="flex flex-row items-center gap-5">
             <div className="w-[12px] h-[85px] rounded-[5px] bg-gradient-to-b from-[#BE2E21] via-[#F2DF3A] to-[#0693E3]"></div>
             <p>
               Телефон:<br></br>
               +7 (3412) 269-220
             </p>
           </div>
-          <div className="flex flex-row items-center gap-5">  
+          <div className="flex flex-row items-center gap-5">
             <div className="content w-[12px] h-[85px] rounded-[5px] bg-gradient-to-b from-[#BE2E21] via-[#F2DF3A] to-[#0693E3]"></div>
             <p>
               E-mail:<br></br>
@@ -64,51 +71,53 @@ const Account = () => {
       </div>
 
       <div className="flex flex-col pl-56 pt-12 max-w-screen-lg">
-        <div className="text-[22px] pb-6"><span>Личный кабинет</span></div>
+        <div className="text-[22px] pb-6">
+          <span>Личный кабинет</span>
+        </div>
         <div className="pl-12 space-y-4">
           <div className="flex flex-row">
             <span className="w-[300px]">ФИО</span>
-            <div>Zakharchuk Sophya Igorevna</div>
+            <div>{`${userData?.lastName} ${userData?.firstName} ${userData?.patronymic}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Дата рождения</span>
-            <div>jvghjk</div>
+            <div>{`${userData?.birthDate}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Серия и номер паспорта</span>
-            <div>jvghjk</div>
+            <div>{`${userData?.pasport}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Выдан</span>
-            <div>Zakharchuk Sophya Igorevna</div>
+            <div>{`${userData?.issued}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Код подразделения</span>
-            <div>jvghjk</div>
+            <div>{`${userData?.departmentCode}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Дата выдачи</span>
-            <div>jvghjk</div>
+            <div>{`${userData?.dateOfIssue}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">СНИЛС</span>
-            <div>jvghjk</div>
+            <div>{`${userData?.snils}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">ИНН</span>
-            <div>jvghjk</div>
+            <div>{`${userData?.inn}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Адрес проживания</span>
-            <div>Zakharchuk Sophya Igorevna</div>
+            <div>{`${userData?.adress}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Номер телефона</span>
-            <div>jvghjk</div>
+            <div>{`${userData?.phoneNumber}`}</div>
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Электронная почта</span>
-            <div>jvghjk</div>
+            <div>{`${user?.emailAddresses[0].emailAddress}`}</div>
           </div>
         </div>
         <div className="flex flex-row pt-8 pb-8">

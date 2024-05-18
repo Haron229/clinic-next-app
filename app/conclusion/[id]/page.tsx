@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 import {
@@ -17,7 +16,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
@@ -62,6 +60,14 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container py-20">
+      <div className="flex flex-col items-end">
+        <Link href={"/account"}>
+          <Button className="h-[71px] text-[24px]">
+            Вернуться к списку приёмов
+          </Button>
+        </Link>
+        <div className="pt-20 text-[24px]">Пациент: </div>
+      </div>
       <Form {...form}>
         <form className="flex flex-col gap-5 text-xl">
           <FormLabel className="text-[32px] pb-[30px]">
@@ -265,13 +271,21 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
               <Checkbox onCheckedChange={() => setIsChecked(!isChecked)} />
               <FormLabel>Подтвердить введённые данные</FormLabel>
             </div>
-            <Button
-              type="submit"
-              className="h-[71px] text-[24px] disabled:bg-[#ECECEC]"
-              disabled={!isChecked}
-            >
-              Отправить результаты осмотра
-            </Button>
+            <div className="flex flex-row gap-[30px]">
+              <Button
+                className="h-[71px] text-[24px] disabled:bg-[#ECECEC]"
+                disabled={!isChecked}
+              >
+                Распечатать
+              </Button>
+              <Button
+                type="submit"
+                className="h-[71px] text-[24px] disabled:bg-[#ECECEC]"
+                disabled={!isChecked}
+              >
+                Отправить результаты осмотра
+              </Button>
+            </div>
           </div>
         </form>
       </Form>

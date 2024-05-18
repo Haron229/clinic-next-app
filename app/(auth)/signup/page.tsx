@@ -68,7 +68,7 @@ const Signup = () => {
 			});
 
 			if (completeSignUp.status === "complete") {
-				await setActive({ session: completeSignUp.createdSessionId })
+				await setActive({ session: completeSignUp.createdSessionId });
 				router.push("/account"); // push to account page
 			}
 			else {
