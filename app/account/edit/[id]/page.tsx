@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 const formSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
-  patronymic: z.string(),
+  patronymic: z.string().optional(),
   birthDate: z.string(),
   pasport: z.string(),
   issued: z.string(),
@@ -72,7 +72,7 @@ const EditAccount = () => {
     };
 
     const res = await fetch("/api/users/add", {
-      method: isExisting ? "PATCH" : "POST",
+      method: "POST",
       body: JSON.stringify(userData),
     });
   };
@@ -87,7 +87,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Имя</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -99,7 +99,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Фамилия</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -111,7 +111,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Отчетсво</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -123,7 +123,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Дата рождения</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -135,7 +135,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Серия, номер паспорта</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -147,7 +147,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Кем выдан</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -159,7 +159,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Код подразделения</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -171,7 +171,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Дата выдачи</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -183,7 +183,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Адрес</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -195,7 +195,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>СНИЛС</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -207,7 +207,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>ИНН</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
@@ -219,7 +219,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Номер телефона</FormLabel>
               <FormControl>
-                <Input />
+                <Input {...field}/>
               </FormControl>
             </FormItem>
           )}
