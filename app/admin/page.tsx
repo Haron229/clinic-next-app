@@ -26,6 +26,10 @@ const Admin = () => {
     getData();
   }, []);
 
+  const deleteDoctor = async () => {
+    // const res = await
+  }
+
   return (
     <Tabs>
       <TabsList className="flex gap-10">
@@ -44,8 +48,9 @@ const Admin = () => {
       <TabsContent value="doctors">
         {doctors.map((doctor, i) => {
           return (
-            <div key={i}>
-              {`${doctor.lastName} ${doctor.firstName} ${doctor.patronymic}`}
+            <div key={i} className="flex items-baseline gap-5">
+              <span>{`${doctor.lastName} ${doctor.firstName} ${doctor.patronymic}`}</span>
+              {/* <Button onClick={() => deleteDoctor()}}>Удалить</Button> */}
             </div>
           );
         })}
