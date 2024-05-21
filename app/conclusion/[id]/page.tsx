@@ -25,11 +25,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
-import { User } from "@/lib/types";
+import { MedicalConclusion, User } from "@/lib/types";
+
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   complaints: z.string(),
-  anamnezis: z.string(),
+  anamnesis: z.string(),
   od: z.string(),
   os: z.string(),
   eyelids: z.string(),
@@ -47,6 +50,9 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [userData, setUserData] = useState<User | null>(null);
 
+  const { user } = useUser();
+  const router = useRouter();
+
   useEffect(() => {
     const getUserData = async () => {
       let res = await fetch(`/api/users/${params.id}`);
@@ -60,7 +66,7 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       complaints: "",
-      anamnezis: "",
+      anamnesis: "",
       od: "1.0",
       os: "1.0",
       eyelids: "",
@@ -76,7 +82,31 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    const conclusion: MedicalConclusion = {
+      userId: userData?.id as string,
+      doctorId: user?.id as string,
+      complaints: values.complaints,
+      anamnesis: values.anamnesis,
+      od: parseInt(values.od),
+      os: parseInt(values.os),
+      eyelids: values.eyelids,
+      conjunctiva: values.conjunctiva,
+      cornea: values.cornea,
+      frontCam: values.frontCam,
+      lacrimal: values.lacrimal,
+      iris: values.iris,
+      pupil: values.pupil,
+      lens: values.lens,
+      vitreous: values.vitreous,
+    };
+
+    const res = await fetch("/api/conclusions/add", {
+      method: "POST",
+      body: JSON.stringify(conclusion),
+    });
+
+    if (res.ok) router.push("/account");
+    else console.log(res.status);
   };
 
   return (
@@ -116,7 +146,7 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
           />
           <FormField
             control={form.control}
-            name="anamnezis"
+            name="anamnesis"
             render={({ field }) => (
               <FormItem>
                 <div className="flex flex-row gap-[30px]">

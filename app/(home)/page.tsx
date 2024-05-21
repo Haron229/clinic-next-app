@@ -38,7 +38,7 @@ export default function Home() {
         </div>
         <div className="mr-[80px]">
           <Button>
-            <Link href={"/login"}>Личный кабинет</Link>
+            <Link href={"/account"}>Личный кабинет</Link>
           </Button>
         </div>
       </div>

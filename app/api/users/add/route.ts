@@ -8,6 +8,7 @@ export const POST = async (req: NextRequest) => {
 
 		const res = await prisma.user.create({
 			data: {
+				id: data.id,
 				email: data.email,
 				firstName: data.firstName,
 				lastName: data.lastName,

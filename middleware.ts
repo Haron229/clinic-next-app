@@ -2,12 +2,12 @@ import { clerkMiddleware, ClerkMiddlewareAuth, createRouteMatcher } from "@clerk
 import { NextRequest } from "next/server";
 
 const isProtectedRoute = createRouteMatcher([
-  '/admin(.*)',
+  // '/admin(.*)',
   '/account(.*)',
 ]);
 
 const isAdminRoute = createRouteMatcher([
-  '/admin(.*)',
+  // '/admin(.*)',
 ]);
 
 export default clerkMiddleware((auth: ClerkMiddlewareAuth, req: NextRequest) => {

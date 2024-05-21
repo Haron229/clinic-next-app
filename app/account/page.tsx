@@ -1,18 +1,34 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import mainLogo from "../../public/logo.png";
-import { currentUser } from "@clerk/nextjs/server";
+import { useClerk, useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+
 import { User } from "@/lib/types";
 
-const Account = async () => {
+const Account = () => {
   const [userData, setUserData] = useState<User | null>(null);
 
-  const user = await currentUser();
-  const res = await fetch(`/api/users/${user?.emailAddresses[0].emailAddress}`);
+  const { signOut } = useClerk();
+  const { user } = useUser();
+  const router = useRouter();
 
-  if (res.ok) setUserData(await res.json());
+  useEffect(() => {
+    const getUserData = async () => {
+      if (user) {
+        const res = await fetch(`/api/users/${user.id}`);
+
+        if (res.ok) setUserData(await res.json());
+        else router.push(`/account/edit/${user.id}`);
+      }
+    };
+
+    getUserData();
+  }, [router, user]);
 
   return (
     <div>
@@ -44,8 +60,14 @@ const Account = async () => {
           </div>
         </div>
         <div className="mr-[100px]">
-          <Button className="w-28">
-            <Link href={"/login"}>Выход</Link>
+          <Button
+            className="w-28"
+            onClick={() => {
+              signOut();
+              router.push("/login");
+            }}
+          >
+            Выход
           </Button>
         </div>
       </div>
@@ -117,18 +139,20 @@ const Account = async () => {
           </div>
           <div className="flex flex-row">
             <span className="w-[300px]">Электронная почта</span>
-            <div>{`${user?.emailAddresses[0].emailAddress}`}</div>
+            <div>{`${userData?.email}`}</div>
           </div>
         </div>
         <div className="flex flex-row pt-8 pb-8">
           <div className="mr-[100px]">
             <Button className="w-64 py-6">
-              <Link href={"/login"}>Редактировать данные</Link>
+              <Link href={`/account/edit/${userData?.id}`}>
+                Редактировать данные
+              </Link>
             </Button>
           </div>
           <div>
             <Button className="w-64 py-6">
-              <Link href={"/login"}>Сменить логин/пароль</Link>
+              <Link href={"#"}>Сменить логин/пароль</Link>
             </Button>
           </div>
         </div>

@@ -10,7 +10,6 @@ export const POST = async (req: NextRequest) => {
 			data: {
 				date: data.date,
 				time: data.time,
-				isOccupied: true,
 				doctorId: data.doctorId,
 				userId: data.userId,
 			}
