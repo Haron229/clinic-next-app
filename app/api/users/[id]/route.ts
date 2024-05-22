@@ -45,6 +45,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 			conclusions: [
 				...res.conclusions.map((conclusion: MedicalConclusion): MedicalConclusion => {
 					return {
+						createdAt: conclusion.createdAt,
 						userId: conclusion.userId,
 						doctorId: conclusion.doctorId,
 						complaints: conclusion.complaints,

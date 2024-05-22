@@ -83,6 +83,7 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const conclusion: MedicalConclusion = {
+      createdAt: new Date(),
       userId: userData?.id as string,
       doctorId: user?.id as string,
       complaints: values.complaints,

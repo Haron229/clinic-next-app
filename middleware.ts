@@ -2,16 +2,16 @@ import { clerkMiddleware, ClerkMiddlewareAuth, createRouteMatcher } from "@clerk
 import { NextRequest } from "next/server";
 
 const isProtectedRoute = createRouteMatcher([
-  // '/admin(.*)',
+  '/admin(.*)',
   '/account(.*)',
 ]);
 
 const isAdminRoute = createRouteMatcher([
-  // '/admin(.*)',
+  '/admin(.*)',
 ]);
 
 export default clerkMiddleware((auth: ClerkMiddlewareAuth, req: NextRequest) => {
-  if (isProtectedRoute(req)) auth().protect(); // redirect unauthorized users to /login page
+  if (isProtectedRoute(req)) auth().protect({ unauthorizedUrl: "http://localhost:3000/login", unauthenticatedUrl: "http://localhost:3000/login" }); // redirect unauthorized users to /login page
 
   if (isAdminRoute(req)) { // redirect non admin users to /404 page
     auth().protect(has => {

@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { User } from "@/lib/types";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -37,6 +38,7 @@ const EditAccount = () => {
   const [isExisting, setIsExisting] = useState(false);
 
   const { user } = useUser();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,6 +77,8 @@ const EditAccount = () => {
       method: "POST",
       body: JSON.stringify(userData),
     });
+
+    if (res.ok) router.push("/account");
   };
 
   return (
@@ -87,7 +91,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Имя</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -99,7 +103,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Фамилия</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -111,7 +115,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Отчетсво</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -123,7 +127,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Дата рождения</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -135,7 +139,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Серия, номер паспорта</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -147,7 +151,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Кем выдан</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -159,7 +163,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Код подразделения</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -171,7 +175,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Дата выдачи</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -183,7 +187,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Адрес</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -195,7 +199,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>СНИЛС</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -207,7 +211,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>ИНН</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -219,7 +223,7 @@ const EditAccount = () => {
             <FormItem>
               <FormLabel>Номер телефона</FormLabel>
               <FormControl>
-                <Input {...field}/>
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}

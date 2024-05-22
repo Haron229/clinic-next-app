@@ -43,6 +43,7 @@ export type Appointment = {
 }
 
 export type MedicalConclusion = {
+	createdAt: Date
 	userId: string
 	doctorId: string
 

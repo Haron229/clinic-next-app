@@ -72,7 +72,7 @@ export default function Home() {
           <div className="font-light">Заботимся о зрении с 1996 года.<br></br>Запишитесь на приём, и мы позаботимся о вас!</div>
           <div className="mr-[80px]">
             <Button className="text-[18px] font-normal w-[300px] h-[52px] mt-[20px]">
-              <Link href={"#"}>Записаться на приём</Link>
+              <Link href={"/appointment"}>Записаться на приём</Link>
             </Button>
           </div>
         </div>
