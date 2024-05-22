@@ -1,10 +1,15 @@
 import { prisma } from "@/lib/prisma";
-import { Doctor } from "@/lib/types";
+import { Appointment, Doctor, MedicalConclusion } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	try {
-		const res = await prisma.doctor.findMany();
+		const res = await prisma.doctor.findMany({
+			include: {
+				appointments: true,
+				conclusions: true
+			}
+		});
 
 		if (!res) return new NextResponse("Не удалось найти докторов.", { status: 400 });
 
@@ -18,7 +23,15 @@ export const GET = async (req: NextRequest) => {
 					startTime: doc.startTime,
 					endTime: doc.endTime,
 					breakTime: doc.breakTime,
-					appointmentDuration: doc.appointmentDuration
+					appointmentDuration: doc.appointmentDuration,
+					appointments: [...doc.appointments.map((appointment: Appointment): Appointment => {
+						return {
+							userId: appointment.userId,
+							doctorId: appointment.doctorId,
+							date: appointment.date,
+							time: appointment.time,
+						}
+					})]
 				}
 			})
 		];
