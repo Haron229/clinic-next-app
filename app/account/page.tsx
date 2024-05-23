@@ -49,6 +49,8 @@ const Account = () => {
     else getUserData();
   }, [router, user]);
 
+  const _user = userData ?? doctorData;
+
   return (
     <div>
       <div className="flex justify-center items-center h-[150px]">
@@ -200,8 +202,8 @@ const Account = () => {
               <span>Мои медицинские заключения</span>
             </div>
             <Accordion type="multiple">
-              {userData &&
-                userData.conclusions?.map((conclusion, i) => (
+              {_user &&
+                _user.conclusions?.map((conclusion, i) => (
                   <AccordionItem
                     key={i}
                     value={conclusion.createdAt.toDateString()}
@@ -247,8 +249,8 @@ const Account = () => {
               <span>Мои приемы</span>
             </div>
             <Accordion type="multiple">
-              {userData &&
-                userData.appointments?.map((appointment, i) => (
+              {_user &&
+                _user.appointments?.map((appointment, i) => (
                   <AccordionItem key={i} value={appointment.date}>
                     <AccordionTrigger>
                       Прием на осмотр на{" " + appointment.date}
