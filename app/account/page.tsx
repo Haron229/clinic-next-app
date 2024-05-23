@@ -36,6 +36,7 @@ const Account = () => {
     
     if (user?.organizationMemberships[0]?.role === "org:admin")
       router.push("/admin");
+    else if (user?.organizationMemberships[0]) return;
     else getUserData();
   }, [router, user]);
 
