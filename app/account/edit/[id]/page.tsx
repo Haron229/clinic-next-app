@@ -73,12 +73,21 @@ const EditAccount = () => {
       phoneNumber: values.phoneNumber,
     };
 
-    const res = await fetch("/api/users/add", {
-      method: "POST",
-      body: JSON.stringify(userData),
-    });
+    if (isExisting) {
+      const res = await fetch(`/api/users/${user?.id as string}`, {
+        method: "PATCH",
+        body: JSON.stringify(userData),
+      });
 
-    if (res.ok) router.push("/account");
+      if (res.ok) router.push("/account");
+    } else {
+      const res = await fetch("/api/users/add", {
+        method: "POST",
+        body: JSON.stringify(userData),
+      });
+
+      if (res.ok) router.push("/account");
+    }
   };
 
   return (
