@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { Doctor } from "./types";
+import { is } from "date-fns/locale";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -43,4 +44,8 @@ export function calculateTimeWindows(doc: Doctor): string[] {
     let minutes = window.getMinutes() >= 10 ? window.getMinutes().toString() : "0".concat(window.getMinutes().toString());
     return hour + ":" + minutes;
   });
+}
+
+export function isDoctor(obj: any): obj is Doctor {
+  return obj && obj.appointmentDuration;
 }

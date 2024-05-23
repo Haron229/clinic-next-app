@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Appointment, Doctor, MedicalConclusion } from "@/lib/types";
+import { Appointment, Doctor } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
@@ -25,12 +25,14 @@ export const GET = async (req: NextRequest) => {
 					endTime: doc.endTime,
 					breakTime: doc.breakTime,
 					appointmentDuration: doc.appointmentDuration,
-					appointments: [...doc.appointments.map((appointment: Appointment): Appointment => {
+					appointments: [...doc.appointments.map((appointment): Appointment => {
 						return {
+							id: appointment.id,
 							userId: appointment.userId,
 							doctorId: appointment.doctorId,
 							date: appointment.date,
 							time: appointment.time,
+							isFinished: appointment.isFinished,
 						}
 					})]
 				}

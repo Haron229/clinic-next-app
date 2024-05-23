@@ -36,17 +36,22 @@ export type Doctor = {
 }
 
 export type Appointment = {
+	id: string
 	userId: string
 	doctorId: string
+	conclusionId?: string
 
 	date: string
 	time: string
+	isFinished: boolean
 }
 
 export type MedicalConclusion = {
+	id: string
 	createdAt: Date
 	userId: string
 	doctorId: string
+	appointmentId: string
 
 	complaints: string
 	anamnesis: string

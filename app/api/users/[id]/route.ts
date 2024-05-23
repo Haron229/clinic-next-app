@@ -9,8 +9,16 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 				id: params.id,
 			},
 			include: {
-				appointments: true,
-				conclusions: true
+				appointments: {
+					include: {
+						conclusion: true
+					}
+				},
+				conclusions: {
+					include: {
+						appointment: true
+					}
+				}
 			}
 		});
 
@@ -33,34 +41,38 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 			inn: res.inn ?? "",
 			phoneNumber: res.phoneNumber ?? "",
 			appointments: [
-				...res.appointments.map((appointment: Appointment): Appointment => {
+				...res.appointments.map((appointment): Appointment => {
 					return {
+						id: appointment.id,
 						userId: appointment.userId,
 						doctorId: appointment.doctorId,
 						date: appointment.date,
 						time: appointment.time,
+						isFinished: appointment.isFinished,
 					}
 				})
 			],
 			conclusions: [
-				...res.conclusions.map((conclusion: MedicalConclusion): MedicalConclusion => {
+				...res.conclusions.map((conclusion): MedicalConclusion => {
 					return {
+						id: conclusion.id,
 						createdAt: conclusion.createdAt,
 						userId: conclusion.userId,
 						doctorId: conclusion.doctorId,
-						complaints: conclusion.complaints,
-						anamnesis: conclusion.anamnesis,
-						od: conclusion.od,
-						os: conclusion.os,
-						eyelids: conclusion.eyelids,
-						conjunctiva: conclusion.conjunctiva,
-						cornea: conclusion.cornea,
-						frontCam: conclusion.frontCam,
-						lacrimal: conclusion.lacrimal,
-						iris: conclusion.iris,
-						pupil: conclusion.pupil,
-						lens: conclusion.lens,
-						vitreous: conclusion.vitreous,
+						appointmentId: conclusion.appointment?.id ?? "",
+						complaints: conclusion.complaints ?? "",
+						anamnesis: conclusion.anamnesis ?? "",
+						od: conclusion.od ?? 0,
+						os: conclusion.os ?? 0,
+						eyelids: conclusion.eyelids ?? "",
+						conjunctiva: conclusion.conjunctiva ?? "",
+						cornea: conclusion.cornea ?? "",
+						frontCam: conclusion.frontCam ?? "",
+						lacrimal: conclusion.lacrimal ?? "",
+						iris: conclusion.iris ?? "",
+						pupil: conclusion.pupil ?? "",
+						lens: conclusion.lens ?? "",
+						vitreous: conclusion.vitreous ?? "",
 					}
 				})
 			]

@@ -51,20 +51,22 @@ model Doctor {
 }
 
 model MedicalConclusion {
-  id          String @id @default(uuid())
-  complaints  String
-  anamnesis   String
-  od          Float
-  os          Float
-  eyelids     String
-  conjunctiva String
-  cornea      String
-  frontCam    String
-  lacrimal    String
-  iris        String
-  pupil       String
-  lens        String
-  vitreous    String
+  id          String  @id @default(uuid())
+  complaints  String?
+  anamnesis   String?
+  od          Float?
+  os          Float?
+  eyelids     String?
+  conjunctiva String?
+  cornea      String?
+  frontCam    String?
+  lacrimal    String?
+  iris        String?
+  pupil       String?
+  lens        String?
+  vitreous    String?
+
+  appointment Appointment?
 
   user     User   @relation(fields: [userId], references: [id])
   userId   String
@@ -76,9 +78,12 @@ model MedicalConclusion {
 }
 
 model Appointment {
-  id   String @id @default(uuid())
-  date String
-  time String
+  id           String             @id @default(uuid())
+  date         String
+  time         String
+  isFinished   Boolean            @default(false)
+  conclusion   MedicalConclusion? @relation(fields: [conclusionId], references: [id])
+  conclusionId String?            @unique
 
   Doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
   doctorId String

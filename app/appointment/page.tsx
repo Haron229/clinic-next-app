@@ -92,6 +92,7 @@ const AppointmentPage = () => {
       doctorId: values.doctor,
       date: values.date,
       time: values.time,
+      isFinished: false,
     };
 
     const res = await fetch("/api/appointments/add", {

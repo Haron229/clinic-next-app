@@ -6,7 +6,10 @@ export const POST = async (req: NextRequest) => {
 	try {
 		const data: MedicalConclusion = await req.json();
 
-		const res = await prisma.medicalConclusion.create({
+		const res = await prisma.medicalConclusion.update({
+			where: {
+				id: data.id,
+			},
 			data: {
 				complaints: data.complaints,
 				anamnesis: data.anamnesis,
@@ -26,33 +29,42 @@ export const POST = async (req: NextRequest) => {
 			}
 		});
 
-		const doc = await prisma.doctor.update({
+		// const doc = await prisma.doctor.update({
+		// 	where: {
+		// 		id: data.doctorId,
+		// 	},
+		// 	data: {
+		// 		conclusions: {
+		// 			connect: {
+		// 				id: res.id,
+		// 			}
+		// 		}
+		// 	}
+		// });
+
+		// const user = await prisma.user.update({
+		// 	where: {
+		// 		id: data.userId,
+		// 	},
+		// 	data: {
+		// 		conclusions: {
+		// 			connect: {
+		// 				id: res.id,
+		// 			}
+		// 		}
+		// 	}
+		// });
+
+		const appointment = await prisma.appointment.update({
 			where: {
-				id: data.doctorId,
+				id: data.appointmentId,
 			},
 			data: {
-				conclusions: {
-					connect: {
-						id: res.id,
-					}
-				}
+				isFinished: true,
 			}
 		});
 
-		const user = await prisma.user.update({
-			where: {
-				id: data.userId,
-			},
-			data: {
-				conclusions: {
-					connect: {
-						id: res.id,
-					}
-				}
-			}
-		});
-
-		if (!res || !doc || !user) return new NextResponse("Не удалось создать медицинское заключение.", { status: 400 });
+		if (!res || !appointment) return new NextResponse("Не удалось создать медицинское заключение.", { status: 400 });
 
 		return new NextResponse("Медицинское заключени успешно создано.", { status: 200 });
 	} catch (error) {

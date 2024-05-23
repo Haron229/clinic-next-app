@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/accordion";
 
 import { Doctor, User } from "@/lib/types";
+import { isDoctor } from "@/lib/utils";
 
 const Account = () => {
   const [userData, setUserData] = useState<User | null>(null);
@@ -37,7 +38,7 @@ const Account = () => {
 
     const getDoctorData = async () => {
       if (user) {
-        const res = await fetch(`/api/doctors/${user.primaryEmailAddress}`);
+        const res = await fetch(`/api/doctors/byEmail/${user.primaryEmailAddress}`);
 
         if (res.ok) setDoctorData(await res.json());
       }
@@ -204,12 +205,10 @@ const Account = () => {
             <Accordion type="multiple">
               {_user &&
                 _user.conclusions?.map((conclusion, i) => (
-                  <AccordionItem
-                    key={i}
-                    value={conclusion.createdAt.toDateString()}
-                  >
+                  <AccordionItem key={i} value={i.toString()}>
                     <AccordionTrigger>
-                      Заключение от{" " + conclusion.createdAt.toDateString()}
+                      Заключение от
+                      {" " + new Date(conclusion.createdAt).toDateString()}
                     </AccordionTrigger>
                     <AccordionContent>
                       {conclusion.complaints +
@@ -257,6 +256,11 @@ const Account = () => {
                     </AccordionTrigger>
                     <AccordionContent>
                       {appointment.date + "<br/>" + appointment.time}
+                      {isDoctor(_user) && (
+                        <Link href={`/conclusion/${appointment.conclusionId}`} className="p-5 outline outline-1">
+                          Перейти
+                        </Link>
+                      )}
                     </AccordionContent>
                   </AccordionItem>
                 ))}

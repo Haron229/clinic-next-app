@@ -12,6 +12,27 @@ export const POST = async (req: NextRequest) => {
 				time: data.time,
 				doctorId: data.doctorId,
 				userId: data.userId,
+				isFinished: false,
+			}
+		});
+
+		const conclusion = await prisma.medicalConclusion.create({
+			data: {
+				userId: data.userId,
+				doctorId: data.doctorId
+			}
+		});
+
+		await prisma.appointment.update({
+			where: {
+				id: res.id,
+			},
+			data: {
+				conclusion: {
+					connect: {
+						id: conclusion.id,
+					}
+				}
 			}
 		});
 
@@ -41,7 +62,7 @@ export const POST = async (req: NextRequest) => {
 			}
 		});
 
-		if (!res || !doc || !user) return new NextResponse("Не удалось создать запись к врачу.", { status: 400 });
+		if (!res || !doc || !user || !conclusion) return new NextResponse("Не удалось создать запись к врачу.", { status: 400 });
 
 		return new NextResponse("Запись к врачу успешно создана.", { status: 200 });
 	} catch (error) {

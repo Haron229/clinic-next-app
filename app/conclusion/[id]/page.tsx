@@ -55,15 +55,24 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const getUserData = async () => {
-      let res = await fetch(`/api/users/${params.id}`);
-      if (res.ok) setUserData(await res.json());
-
-      res = await fetch(`/api/doctors/${user?.primaryEmailAddress}`);
-      if (res.ok) setDoctorData(await res.json());
+    const getConclusionData = async () => {
+      let conclusionData: MedicalConclusion;
+      const res = await fetch(`/api/conclusions/${params.id}`);
+      if (res.ok) {
+        conclusionData = await res.json();
+        getUserData(conclusionData);
+      }
     };
 
-    getUserData();
+    const getUserData = async (data: MedicalConclusion) => {
+      const userRes = await fetch(`/api/users/${data.userId}`);
+      if (userRes.ok) setUserData(await userRes.json());
+
+      const docRes = await fetch(`/api/doctors/${data.doctorId}`);
+      if (docRes.ok) setDoctorData(await docRes.json());
+    };
+
+    getConclusionData();
   }, [params.id, user]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -87,6 +96,10 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const conclusion: MedicalConclusion = {
+      id: params.id,
+      appointmentId: userData?.conclusions?.find(
+        ({ id }) => id === params.id
+      )?.appointmentId as string,
       createdAt: new Date(),
       userId: userData?.id as string,
       doctorId: doctorData?.id as string,
@@ -104,6 +117,9 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
       lens: values.lens,
       vitreous: values.vitreous,
     };
+
+    console.log(userData);
+    
 
     const res = await fetch("/api/conclusions/add", {
       method: "POST",
