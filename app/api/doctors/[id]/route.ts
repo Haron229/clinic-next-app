@@ -6,7 +6,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 	try {
 		const res = await prisma.doctor.findFirst({
 			where: {
-				id: params.id,
+				email: params.id,
 			},
 			include: {
 				appointments: true,
