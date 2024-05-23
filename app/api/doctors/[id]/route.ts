@@ -18,6 +18,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 
 		const doc: Doctor = {
 			id: res.id,
+			email: res.email,
 			firstName: res.firstName,
 			lastName: res.lastName,
 			patronymic: res.patronymic,

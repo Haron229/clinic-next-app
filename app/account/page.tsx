@@ -33,7 +33,7 @@ const Account = () => {
         else router.push(`/account/edit/${user.id}`);
       }
     };
-
+    
     if (user?.organizationMemberships[0]?.role === "org:admin")
       router.push("/admin");
     else getUserData();

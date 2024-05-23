@@ -12,14 +12,6 @@ const isAdminRoute = createRouteMatcher([
 
 export default clerkMiddleware((auth: ClerkMiddlewareAuth, req: NextRequest) => {
   if (isProtectedRoute(req)) auth().protect({ unauthorizedUrl: "http://localhost:3000/login", unauthenticatedUrl: "http://localhost:3000/login" }); // redirect unauthorized users to /login page
-
-  if (isAdminRoute(req)) { // redirect non admin users to /404 page
-    auth().protect(has => {
-      return (
-        has({ role: 'org:admin' })
-      )
-    });
-  }
 });
 
 export const config = {

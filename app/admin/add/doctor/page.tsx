@@ -16,8 +16,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Doctor } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import { useSignUp } from "@clerk/nextjs";
 
 const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
   firstName: z.string(),
   lastName: z.string(),
   patronymic: z.string(),
@@ -37,6 +40,7 @@ const AddDoctorPage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const doctor: Doctor = {
       id: "",
+      email: values.email,
       firstName: values.firstName,
       lastName: values.lastName,
       patronymic: values.patronymic,
@@ -51,8 +55,9 @@ const AddDoctorPage = () => {
       body: JSON.stringify(doctor),
     });
 
-    if (res.ok) router.push("/admin");
-    else console.log(res.status);
+    if (res.ok) {
+      router.push("/admin");
+    } else console.log(res.status);
   };
 
   return (
@@ -62,6 +67,30 @@ const AddDoctorPage = () => {
         className="container flex flex-col gap-5"
       >
         <div className="flex gap-10">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Пароль</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="lastName"

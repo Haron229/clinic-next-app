@@ -34,6 +34,7 @@ model User {
 
 model Doctor {
   id                  String @id @default(uuid())
+  email               String
   firstName           String
   lastName            String
   patronymic          String
@@ -75,9 +76,9 @@ model MedicalConclusion {
 }
 
 model Appointment {
-  id         String  @id @default(uuid())
-  date       String
-  time       String
+  id   String @id @default(uuid())
+  date String
+  time String
 
   Doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
   doctorId String
