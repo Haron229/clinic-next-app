@@ -15,10 +15,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { User } from "@/lib/types";
+import { Doctor, User } from "@/lib/types";
 
 const Account = () => {
   const [userData, setUserData] = useState<User | null>(null);
+  const [doctorData, setDoctorData] = useState<Doctor | null>(null);
 
   const { signOut } = useClerk();
   const { user } = useUser();
@@ -33,10 +34,18 @@ const Account = () => {
         else router.push(`/account/edit/${user.id}`);
       }
     };
-    
+
+    const getDoctorData = async () => {
+      if (user) {
+        const res = await fetch(`/api/doctors/${user.primaryEmailAddress}`);
+
+        if (res.ok) setDoctorData(await res.json());
+      }
+    };
+
     if (user?.organizationMemberships[0]?.role === "org:admin")
       router.push("/admin");
-    else if (user?.organizationMemberships[0]) return;
+    else if (user?.organizationMemberships[0]) getDoctorData();
     else getUserData();
   }, [router, user]);
 
@@ -113,52 +122,62 @@ const Account = () => {
             <div className="text-[22px] pb-6">
               <span>Личный кабинет</span>
             </div>
-            <div className="pl-12 space-y-4">
-              <div className="flex flex-row">
-                <span className="w-[300px]">ФИО</span>
-                <div>{`${userData?.lastName} ${userData?.firstName} ${userData?.patronymic}`}</div>
+            {(userData && (
+              <div className="pl-12 space-y-4">
+                <div className="flex flex-row">
+                  <span className="w-[300px]">ФИО</span>
+                  <div>{`${userData?.lastName} ${userData?.firstName} ${userData?.patronymic}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">Дата рождения</span>
+                  <div>{`${userData?.birthDate}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">Серия и номер паспорта</span>
+                  <div>{`${userData?.pasport}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">Выдан</span>
+                  <div>{`${userData?.issued}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">Код подразделения</span>
+                  <div>{`${userData?.departmentCode}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">Дата выдачи</span>
+                  <div>{`${userData?.dateOfIssue}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">СНИЛС</span>
+                  <div>{`${userData?.snils}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">ИНН</span>
+                  <div>{`${userData?.inn}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">Адрес проживания</span>
+                  <div>{`${userData?.adress}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">Номер телефона</span>
+                  <div>{`${userData?.phoneNumber}`}</div>
+                </div>
+                <div className="flex flex-row">
+                  <span className="w-[300px]">Электронная почта</span>
+                  <div>{`${userData?.email}`}</div>
+                </div>
               </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">Дата рождения</span>
-                <div>{`${userData?.birthDate}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">Серия и номер паспорта</span>
-                <div>{`${userData?.pasport}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">Выдан</span>
-                <div>{`${userData?.issued}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">Код подразделения</span>
-                <div>{`${userData?.departmentCode}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">Дата выдачи</span>
-                <div>{`${userData?.dateOfIssue}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">СНИЛС</span>
-                <div>{`${userData?.snils}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">ИНН</span>
-                <div>{`${userData?.inn}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">Адрес проживания</span>
-                <div>{`${userData?.adress}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">Номер телефона</span>
-                <div>{`${userData?.phoneNumber}`}</div>
-              </div>
-              <div className="flex flex-row">
-                <span className="w-[300px]">Электронная почта</span>
-                <div>{`${userData?.email}`}</div>
-              </div>
-            </div>
+            )) ||
+              (doctorData && (
+                <div className="pl-12 space-y-4">
+                  <div className="flex flex-row">
+                    <span className="w-[300px]">ФИО</span>
+                    <div>{`${doctorData?.lastName} ${doctorData?.firstName} ${doctorData?.patronymic}`}</div>
+                  </div>
+                </div>
+              ))}
             <div className="flex flex-row pt-8 pb-8">
               <div className="mr-[100px]">
                 <Button className="w-64 py-6">
