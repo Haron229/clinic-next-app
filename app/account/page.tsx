@@ -205,10 +205,12 @@ const Account = () => {
             <Accordion type="multiple">
               {_user &&
                 _user.conclusions?.map((conclusion, i) => (
-                  <AccordionItem key={i} value={i.toString()}>
+                  <AccordionItem
+                    key={i}
+                    value={i.toString()}
+                  >
                     <AccordionTrigger>
-                      Заключение от
-                      {" " + new Date(conclusion.createdAt).toDateString()}
+                      Заключение от{" " + new Date(conclusion.createdAt).toDateString()}
                     </AccordionTrigger>
                     <AccordionContent>
                       {conclusion.complaints +
