@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
-import { MedicalConclusion, User } from "@/lib/types";
+import { Doctor, MedicalConclusion, User } from "@/lib/types";
 
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -49,6 +49,7 @@ const formSchema = z.object({
 const Conclusion = ({ params }: { params: { id: string } }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [userData, setUserData] = useState<User | null>(null);
+  const [doctorData, setDoctorData] = useState<Doctor | null>(null);
 
   const { user } = useUser();
   const router = useRouter();
@@ -56,11 +57,14 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const getUserData = async () => {
       let res = await fetch(`/api/users/${params.id}`);
-      setUserData(await res.json());
+      if (res.ok) setUserData(await res.json());
+
+      res = await fetch(`/api/doctors/${user?.primaryEmailAddress}`);
+      if (res.ok) setDoctorData(await res.json());
     };
 
     getUserData();
-  }, [params.id]);
+  }, [params.id, user]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -85,7 +89,7 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
     const conclusion: MedicalConclusion = {
       createdAt: new Date(),
       userId: userData?.id as string,
-      doctorId: user?.id as string,
+      doctorId: doctorData?.id as string,
       complaints: values.complaints,
       anamnesis: values.anamnesis,
       od: parseInt(values.od),
