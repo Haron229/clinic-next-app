@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Doctor, User } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/nextjs";
 
 const Admin = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
 
+  const { user } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -23,12 +25,14 @@ const Admin = () => {
       } else console.log(usersRes.status, doctorsRes.status);
     };
 
-    getData();
-  }, []);
+    if (user?.organizationMemberships[0]?.role !== "org:admin")
+      router.push("/");
+    else getData();
+  }, [router, user]);
 
   const deleteDoctor = async () => {
     // const res = await
-  }
+  };
 
   return (
     <Tabs>

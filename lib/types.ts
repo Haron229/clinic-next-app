@@ -22,6 +22,7 @@ export type User = {
 
 export type Doctor = {
 	id: string
+	email: string
 	firstName: string
 	lastName: string
 	patronymic: string

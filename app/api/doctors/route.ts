@@ -17,6 +17,7 @@ export const GET = async (req: NextRequest) => {
 			...res.map((doc): Doctor => {
 				return {
 					id: doc.id,
+					email: doc.email,
 					firstName: doc.firstName,
 					lastName: doc.lastName,
 					patronymic: doc.patronymic,

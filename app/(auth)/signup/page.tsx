@@ -83,7 +83,7 @@ const Signup = () => {
           body: JSON.stringify(userData),
         });
 
-        if (res.ok) router.push(`/account/edit/${userData.id}`); // push to edit account page
+        if (res.ok) router.push(`/account/edit/${userData.id}`);
       } else {
         console.log(JSON.stringify(completeSignUp, null, 2));
       }
