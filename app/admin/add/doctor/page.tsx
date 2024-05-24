@@ -62,11 +62,21 @@ const AddDoctorPage = () => {
 
   return (
     <Form {...form}>
+      <div className="flex items-center justify-between h-[130px] ml-20">
+          <Button
+            className="w-28"
+            onClick={() => {
+              router.back();
+            }}
+          >
+            Назад
+          </Button>
+      </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="container flex flex-col gap-5"
+        className="flex flex-col gap-5 w-[560px] ml-96"
       >
-        <div className="flex gap-10">
+        <div className="flex justify-between gap-10">
           <FormField
             control={form.control}
             name="email"
@@ -91,44 +101,48 @@ const AddDoctorPage = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Фамилия</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Имя</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="patronymic"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Отчество</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+          </div>
+          <div className="">
+            <div>
+              <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Фамилия</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Имя</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="patronymic"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Отчество</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
-        <div className="flex gap-10">
+        <div className="flex justify-between gap-10">
           <FormField
             control={form.control}
             name="startTime"

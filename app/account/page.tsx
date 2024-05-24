@@ -85,11 +85,10 @@ const Account = () => {
           <Button
             className="w-28"
             onClick={() => {
-              signOut();
-              router.push("/login");
+              router.replace("./");
             }}
           >
-            Выход
+            Главная
           </Button>
         </div>
       </div>
@@ -118,7 +117,7 @@ const Account = () => {
         <TabsList className="w-full bg-lightBlue gap-10">
           <TabsTrigger value="account">Личный кабинет</TabsTrigger>
           <TabsTrigger value="conclusions">Заключения</TabsTrigger>
-          <TabsTrigger value="appointments">Приемы</TabsTrigger>
+          <TabsTrigger value="appointments">Приёмы</TabsTrigger>
         </TabsList>
         <TabsContent value="account">
           <div className="flex flex-col pl-56 pt-12 max-w-screen-lg">
@@ -182,19 +181,28 @@ const Account = () => {
                 </div>
               ))}
             <div className="flex flex-row pt-8 pb-8">
-              <div className="mr-[100px]">
+              {/* <div className="mr-[100px]">
                 <Button className="w-64 py-6">
                   <Link href={`/account/edit/${userData?.id}`}>
                     Редактировать данные
                   </Link>
                 </Button>
-              </div>
+              </div> */}
               <div>
                 <Button className="w-64 py-6">
                   <Link href={"#"}>Сменить логин/пароль</Link>
                 </Button>
               </div>
             </div>
+            <Button
+              className="px-12 max-w-fit bg-lightGrey hover:bg-darkGrey hover:text-black mb-8"
+              onClick={() => {
+                signOut();
+                router.push("/login");
+              }}
+            >
+              Выход из аккаунта
+            </Button>
           </div>
         </TabsContent>
         <TabsContent value="conclusions">
@@ -209,35 +217,44 @@ const Account = () => {
                     key={i}
                     value={i.toString()}
                   >
-                    <AccordionTrigger>
-                      Заключение от{" " + new Date(conclusion.createdAt).toDateString()}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      {conclusion.complaints +
-                        "<br/>" +
-                        conclusion.anamnesis +
-                        "<br/>" +
-                        conclusion.od +
-                        "<br/>" +
-                        conclusion.os +
-                        "<br/>" +
-                        conclusion.eyelids +
-                        "<br/>" +
-                        conclusion.conjunctiva +
-                        "<br/>" +
-                        conclusion.cornea +
-                        "<br/>" +
-                        conclusion.frontCam +
-                        "<br/>" +
-                        conclusion.lacrimal +
-                        "<br/>" +
-                        conclusion.iris +
-                        "<br/>" +
-                        conclusion.pupil +
-                        "<br/>" +
-                        conclusion.lens +
-                        "<br/>" +
-                        conclusion.vitreous}
+                    {/* Доделать вывод заключений */}
+                      <AccordionTrigger>
+                        Заключение от{" " + new Date(conclusion.createdAt).toDateString()}
+                      </AccordionTrigger>
+                    <AccordionContent><p>
+                      {
+                        "Анамнез: " +
+                        conclusion.anamnesis}</p>
+                        <p>{"OD: " +
+                        conclusion.od}</p>
+                        <p>{
+                          "OS: " +
+                          conclusion.os
+                        }</p>
+                        <p>{"Веки: " +
+                        conclusion.eyelids}</p>
+                        <p>{
+                        "Конъюнктива: "+
+                        conclusion.conjunctiva}</p>
+                        <p> {
+                        "Роговица: " +
+                        conclusion.cornea}</p>
+                        <p>{
+                        "Передняя камера: " +
+                        conclusion.frontCam}</p>
+                        <p>{
+                        "Слёзные органы: " +
+                        conclusion.lacrimal}</p>
+                        <p>{"Радужная оболочка: " +
+                        conclusion.iris}</p>
+                        <p>{
+                        "Зрачок: " +
+                        conclusion.pupil}</p>
+                        <p>{
+                        "Хрусталик: " +
+                        conclusion.lens}</p><p>{
+                        "Стекловидное тело: " +
+                        conclusion.vitreous}</p>
                     </AccordionContent>
                   </AccordionItem>
                 ))}
@@ -247,19 +264,19 @@ const Account = () => {
         <TabsContent value="appointments">
           <div className="flex flex-col pl-56 pt-12 max-w-screen-lg">
             <div className="text-[22px] pb-6">
-              <span>Мои приемы</span>
+              <span>Мои приёмы</span>
             </div>
             <Accordion type="multiple">
               {_user &&
                 _user.appointments?.map((appointment, i) => (
                   <AccordionItem key={i} value={appointment.date}>
                     <AccordionTrigger>
-                      Прием на осмотр на{" " + appointment.date}
+                      Приём на осмотр на{" " + appointment.date}
                     </AccordionTrigger>
                     <AccordionContent>
-                      {appointment.date + "<br/>" + appointment.time}
+                      {appointment.date} <p><br/>{appointment.time}</p>
                       {isDoctor(_user) && (
-                        <Link href={`/conclusion/${appointment.conclusionId}`} className="p-5 outline outline-1">
+                        <Link href={`/conclusion/${appointment.conclusionId}`} className=" ml-56 p-5 outline outline-1">
                           Перейти
                         </Link>
                       )}

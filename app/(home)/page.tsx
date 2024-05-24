@@ -81,7 +81,6 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center space-x-40 mt-[50px]">
-        {/* убрать изенение цвета при hover */}
         <div className="">
           <Button className="text-[16px] w-[280px] h-[46px] bg-darkGrey">
             <Link href={"#"}>Консультация</Link>

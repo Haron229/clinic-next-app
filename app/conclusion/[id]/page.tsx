@@ -131,14 +131,14 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="container py-20">
+    <div className="container py-8">
       <div className="flex flex-col items-end">
         <Link href={"/account"}>
-          <Button className="h-[71px] text-[24px]">
+          <Button className="py-3 px-6 text-[16px]">
             Вернуться к списку приёмов
           </Button>
         </Link>
-        <div className="pt-20 text-[24px]">
+        <div className="pt-8 text-[18px]">
           Пациент:
           {` ${userData?.lastName} ${userData?.firstName} ${userData?.patronymic}`}
         </div>
@@ -148,7 +148,7 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-5 text-xl"
         >
-          <FormLabel className="text-[32px] pb-[30px]">
+          <FormLabel className="text-[20px] pb-[30px]">
             Офтальмологический анамнез
           </FormLabel>
           <FormField
@@ -365,15 +365,10 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="1">1</SelectItem>
-                        <SelectItem value="2">2</SelectItem>
-                        <SelectItem value="3">3</SelectItem>
-                        <SelectItem value="4">4</SelectItem>
-                        <SelectItem value="5">5</SelectItem>
-                        <SelectItem value="6">6</SelectItem>
-                        <SelectItem value="7">7</SelectItem>
-                        <SelectItem value="8">8</SelectItem>
-                        <SelectItem value="9">9</SelectItem>
+                        <SelectItem value="Прозрачные">Прозрачные</SelectItem>
+                        <SelectItem value="Повышенное слезоотделение">Повышенное слезоотделение</SelectItem>
+                        <SelectItem value="Гипофункция">Гипофункция</SelectItem>
+                        <SelectItem value="Воспаление">Воспаление</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -523,14 +518,14 @@ const Conclusion = ({ params }: { params: { id: string } }) => {
             </div>
             <div className="flex flex-row gap-[30px]">
               <Button
-                className="h-[71px] text-[24px] disabled:bg-[#ECECEC]"
+                className="py-6 px-6 text-[18px] disabled:bg-[#ECECEC]"
                 disabled={!isChecked}
               >
                 Распечатать
               </Button>
               <Button
                 type="submit"
-                className="h-[71px] text-[24px] disabled:bg-[#ECECEC]"
+                className="py-6 px-6 text-[18px] disabled:bg-[#ECECEC]"
                 disabled={!isChecked}
               >
                 Отправить результаты осмотра

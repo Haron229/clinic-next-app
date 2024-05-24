@@ -19,6 +19,10 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import Image from "next/image";
+import Link from "next/link";
+import mainLogo from "../../../../public/logo.png"
+
 const formSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
@@ -92,7 +96,18 @@ const EditAccount = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <div className="flex items-center justify-between h-[150px]">
+        <div className="pl-48 p-[0px] min-w-fit">
+          <Image className="w-[105px] h-[50px]" src={mainLogo} alt="" />
+        </div>
+        <div className="mr-48">
+          <Button>
+            <Link href={"/account"}>Личный кабинет</Link>
+          </Button>
+        </div>
+      </div>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col ml-96 w-[600px]">
+        <div className="text-2xl pb-8"><span>Заполните форму для завершения регистрации</span></div>
         <FormField
           control={form.control}
           name="firstName"
@@ -122,7 +137,7 @@ const EditAccount = () => {
           name="patronymic"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Отчетсво</FormLabel>
+              <FormLabel>Отчество</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -237,7 +252,7 @@ const EditAccount = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Сохранить</Button>
+        <Button type="submit" className="w-28 mt-5 mb-8">Сохранить</Button>
       </form>
     </Form>
   );
