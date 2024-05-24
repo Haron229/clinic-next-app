@@ -62,6 +62,16 @@ const AddDoctorPage = () => {
 
   return (
     <Form {...form}>
+      <div className="flex items-center justify-between h-[150px] ml-20">
+          <Button
+            className="w-28"
+            onClick={() => {
+              router.back();
+            }}
+          >
+            Назад
+          </Button>
+      </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="container flex flex-col gap-5"

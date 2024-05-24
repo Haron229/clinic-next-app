@@ -106,21 +106,30 @@ const AppointmentPage = () => {
 
   return (
     <>
-      <Header />
+      <div className="ml-60 my-20">
+          <Button
+            className="w-28 bg-lightGrey hover:bg-darkGrey hover:text-black"
+            onClick={() => {
+              router.back();
+            }}
+          >
+            Назад
+          </Button>
+        </div>
       <div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="container">
-            <h2 className="text-2xl">Запись на прием</h2>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="container pl-48">
+            <h2 className="text-xl">Запись на прием</h2>
             <FormField
               control={form.control}
               name="doctor"
               render={({ field }) => (
-                <FormItem className="py-14">
-                  <div className="flex justify-between w-full pb-14">
-                    <FormLabel className="text-[24px]">
+                <FormItem className="py-10">
+                  <div className="pb-8">
+                    <FormLabel className="text-l">
                       Услуга: осмотр
                     </FormLabel>
-                    <span>Стоимость: 1000 рублей</span>
+                    <span className="pl-80">Стоимость: 1000 рублей</span>
                   </div>
                   <Select
                     onValueChange={(value) => {
@@ -153,7 +162,7 @@ const AppointmentPage = () => {
               render={({ field }) => (
                 <FormItem className="flex justify-between w-[630px]">
                   <div className="flex items-end gap-5">
-                    <FormLabel className="text-[20px]">Дата:</FormLabel>
+                    <FormLabel className="text-[17px]">Дата:</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -192,7 +201,7 @@ const AppointmentPage = () => {
                   render={({ field }) => (
                     <FormItem className="py-10">
                       <div className="flex items-end gap-5">
-                        <FormLabel className="text-[20px] text-nowrap">
+                        <FormLabel className="text-[18px] text-nowrap">
                           Время приема:
                         </FormLabel>
                         <Select onValueChange={field.onChange}>
@@ -224,7 +233,7 @@ const AppointmentPage = () => {
                 />
                 <Button
                   type="submit"
-                  className="h-[68px] w-[278px] text-[20px]"
+                  className="py-6 px-10 text-[18px]"
                 >
                   Подтвердить выбор
                 </Button>

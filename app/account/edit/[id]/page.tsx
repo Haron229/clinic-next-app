@@ -92,7 +92,7 @@ const EditAccount = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col ml-96 w-[600px]">
         <FormField
           control={form.control}
           name="firstName"
@@ -237,7 +237,7 @@ const EditAccount = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Сохранить</Button>
+        <Button type="submit" className="w-28 mt-5">Сохранить</Button>
       </form>
     </Form>
   );

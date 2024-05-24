@@ -85,11 +85,10 @@ const Account = () => {
           <Button
             className="w-28"
             onClick={() => {
-              signOut();
-              router.push("/login");
+              router.replace("./");
             }}
           >
-            Выход
+            Главная
           </Button>
         </div>
       </div>
@@ -195,6 +194,15 @@ const Account = () => {
                 </Button>
               </div>
             </div>
+            <Button
+              className="px-12 max-w-fit bg-lightGrey hover:bg-darkGrey hover:text-black ml-48 mb-8"
+              onClick={() => {
+                signOut();
+                router.push("/login");
+              }}
+            >
+              Выход из аккаунта
+            </Button>
           </div>
         </TabsContent>
         <TabsContent value="conclusions">
@@ -212,32 +220,40 @@ const Account = () => {
                     <AccordionTrigger>
                       Заключение от{" " + new Date(conclusion.createdAt).toDateString()}
                     </AccordionTrigger>
-                    <AccordionContent>
-                      {conclusion.complaints +
-                        "<br/>" +
-                        conclusion.anamnesis +
-                        "<br/>" +
-                        conclusion.od +
-                        "<br/>" +
-                        conclusion.os +
-                        "<br/>" +
-                        conclusion.eyelids +
-                        "<br/>" +
-                        conclusion.conjunctiva +
-                        "<br/>" +
-                        conclusion.cornea +
-                        "<br/>" +
-                        conclusion.frontCam +
-                        "<br/>" +
-                        conclusion.lacrimal +
-                        "<br/>" +
-                        conclusion.iris +
-                        "<br/>" +
-                        conclusion.pupil +
-                        "<br/>" +
-                        conclusion.lens +
-                        "<br/>" +
-                        conclusion.vitreous}
+                    <AccordionContent><p>
+                      {
+                        "Анамнез: " +
+                        conclusion.anamnesis}</p>
+                        <p>{"OD: " +
+                        conclusion.od}</p>
+                        <p>{
+                          "OS: " +
+                          conclusion.os
+                        }</p>
+                        <p>{"Веки: " +
+                        conclusion.eyelids}</p>
+                        <p>{
+                        "Конъюнктива: "+
+                        conclusion.conjunctiva}</p>
+                        <p> {
+                        "Роговица: " +
+                        conclusion.cornea}</p>
+                        <p>{
+                        "Передняя камера: " +
+                        conclusion.frontCam}</p>
+                        <p>{
+                        "Слёзные органы: " +
+                        conclusion.lacrimal}</p>
+                        <p>{"Радужная оболочка: " +
+                        conclusion.iris}</p>
+                        <p>{
+                        "Зрачок: " +
+                        conclusion.pupil}</p>
+                        <p>{
+                        "Хрусталик: " +
+                        conclusion.lens}</p><p>{
+                        "Стекловидное тело: " +
+                        conclusion.vitreous}</p>
                     </AccordionContent>
                   </AccordionItem>
                 ))}
